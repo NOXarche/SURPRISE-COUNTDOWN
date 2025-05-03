@@ -1,10 +1,11 @@
 // --- Countdown Logic ---
 // Target: 5th May 2025, 9:00 AM IST (Asia/Kolkata)
 function getTargetDateIST() {
-  // JS Date months are 0-based
-  return new Date(Date.UTC(2025, 4, 3, 8, 26, 0)); // 9:00 AM IST = 3:30 AM UTC
+  return new Date(Date.UTC(2025, 4, 5, 3, 30, 0)); // 9:00 AM IST = 3:30 AM UTC
 }
 const targetDate = getTargetDateIST();
+
+let fireworksActive = false;
 
 function updateCountdown() {
   const now = new Date();
@@ -14,15 +15,14 @@ function updateCountdown() {
     countdownDiv.textContent = "The wait is over!";
     document.getElementById('doorsFrame').classList.add('open');
     document.getElementById('startBtn').style.display = 'block';
-    startFireworks(); // Start fireworks when countdown ends
+    if (!fireworksActive) startFireworks();
     return;
   }
   const days = Math.floor(diff / (1000 * 60 * 60 * 24));
   const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
   const mins = Math.floor((diff / (1000 * 60)) % 60);
   const secs = Math.floor((diff / 1000) % 60);
-  countdownDiv.textContent =
-    `Unveiling in ${days}d ${hours}h ${mins}m ${secs}s`;
+  countdownDiv.textContent = `Unveiling in ${days}d ${hours}h ${mins}m ${secs}s`;
   setTimeout(updateCountdown, 1000);
 }
 updateCountdown();
@@ -33,10 +33,11 @@ function checkAndOpenDoor() {
   if (now >= targetDate) {
     document.getElementById('doorsFrame').classList.add('open');
     document.getElementById('startBtn').style.display = 'block';
-    startFireworks(); // Start fireworks when doors open
+    if (!fireworksActive) startFireworks();
   } else {
     document.getElementById('doorsFrame').classList.remove('open');
     document.getElementById('startBtn').style.display = 'none';
+    stopFireworks();
   }
 }
 setInterval(checkAndOpenDoor, 1000);
@@ -121,16 +122,14 @@ function drawStars() {
   }
   requestAnimationFrame(drawStars);
 }
-
 resizeStarCanvas();
 drawStars();
 
-// --- Fireworks Animation ---
+// --- Fireworks Animation (optimized) ---
 const fireworksCanvas = document.getElementById('fireworksCanvas');
 const fwCtx = fireworksCanvas.getContext('2d');
 let fireworks = [];
 let particles = [];
-let fireworksActive = false;
 
 function resizeFireworksCanvas() {
   fireworksCanvas.width = window.innerWidth;
@@ -139,13 +138,12 @@ function resizeFireworksCanvas() {
 window.addEventListener('resize', resizeFireworksCanvas);
 resizeFireworksCanvas();
 
-// Firework class
 class Firework {
   constructor() {
     this.x = Math.random() * fireworksCanvas.width * 0.8 + fireworksCanvas.width * 0.1;
     this.y = fireworksCanvas.height;
     this.targetY = Math.random() * fireworksCanvas.height * 0.5;
-    this.speed = 2 + Math.random() * 3;
+    this.speed = 2 + Math.random() * 2;
     this.angle = Math.PI / 2 - (Math.random() * 0.2 - 0.1);
     this.vx = Math.cos(this.angle) * this.speed;
     this.vy = -Math.sin(this.angle) * this.speed;
@@ -153,34 +151,27 @@ class Firework {
     this.brightness = 50 + Math.floor(Math.random() * 30);
     this.alpha = 1;
   }
-  
   update() {
     this.x += this.vx;
     this.y += this.vy;
-    this.vy += 0.03; // gravity
-    
-    // If firework reaches target height or starts falling, explode
+    this.vy += 0.03;
     if (this.vy >= 0 || this.y <= this.targetY) {
       this.explode();
       return false;
     }
     return true;
   }
-  
   explode() {
-    const particleCount = 60 + Math.floor(Math.random() * 40);
+    const particleCount = 36 + Math.floor(Math.random() * 18); // Lowered for smoothness
     for (let i = 0; i < particleCount; i++) {
       particles.push(new Particle(this.x, this.y, this.hue));
     }
   }
-  
   draw() {
     fwCtx.beginPath();
     fwCtx.arc(this.x, this.y, 2, 0, Math.PI * 2);
     fwCtx.fillStyle = `hsla(${this.hue}, 100%, ${this.brightness}%, ${this.alpha})`;
     fwCtx.fill();
-    
-    // Trail
     fwCtx.beginPath();
     fwCtx.moveTo(this.x, this.y);
     fwCtx.lineTo(this.x - this.vx * 4, this.y - this.vy * 4);
@@ -190,7 +181,6 @@ class Firework {
   }
 }
 
-// Particle class (for explosion)
 class Particle {
   constructor(x, y, hue) {
     this.x = x;
@@ -198,25 +188,23 @@ class Particle {
     this.hue = hue + Math.random() * 30 - 15;
     this.brightness = 50 + Math.floor(Math.random() * 30);
     this.alpha = 1;
-    this.speed = 0.5 + Math.random() * 4;
+    this.speed = 0.5 + Math.random() * 3;
     this.angle = Math.random() * Math.PI * 2;
     this.vx = Math.cos(this.angle) * this.speed;
     this.vy = Math.sin(this.angle) * this.speed;
     this.gravity = 0.05;
-    this.friction = 0.98;
-    this.size = 1 + Math.random() * 2;
+    this.friction = 0.97;
+    this.size = 1 + Math.random() * 1.5;
   }
-  
   update() {
     this.x += this.vx;
     this.y += this.vy;
     this.vx *= this.friction;
     this.vy *= this.friction;
     this.vy += this.gravity;
-    this.alpha -= 0.01;
+    this.alpha -= 0.013;
     return this.alpha > 0.05;
   }
-  
   draw() {
     fwCtx.beginPath();
     fwCtx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
@@ -236,7 +224,7 @@ function drawFireworks() {
   fwCtx.fillStyle = 'rgba(0, 0, 0, 0.2)';
   fwCtx.fillRect(0, 0, fireworksCanvas.width, fireworksCanvas.height);
   fwCtx.globalCompositeOperation = 'lighter';
-  
+
   // Update and draw fireworks
   for (let i = fireworks.length - 1; i >= 0; i--) {
     if (!fireworks[i].update()) {
@@ -245,7 +233,7 @@ function drawFireworks() {
       fireworks[i].draw();
     }
   }
-  
+
   // Update and draw particles
   for (let i = particles.length - 1; i >= 0; i--) {
     if (!particles[i].update()) {
@@ -254,40 +242,26 @@ function drawFireworks() {
       particles[i].draw();
     }
   }
-  
+
   if (fireworksActive) {
     requestAnimationFrame(drawFireworks);
   }
 }
 
 function startFireworks() {
-  if (fireworksActive) return; // Prevent multiple starts
-  
+  if (fireworksActive) return;
   fireworksCanvas.style.display = 'block';
   fireworksActive = true;
-  
-  // Launch fireworks at random intervals
   function launchLoop() {
     if (!fireworksActive) return;
     launchFirework();
-    setTimeout(launchLoop, 400 + Math.random() * 800);
+    setTimeout(launchLoop, 500 + Math.random() * 700);
   }
-  
   launchLoop();
   drawFireworks();
 }
 
-// --- For testing purposes ---
-// Uncomment this to test the intro without waiting for the target date
-/*
-function testIntro() {
-  // Simulate doors opening
-  document.getElementById('doorsFrame').classList.add('open');
-  document.getElementById('startBtn').style.display = 'block';
-  startFireworks();
-  
-  // To test the intro directly
-  // showMartianIntro();
+function stopFireworks() {
+  fireworksActive = false;
+  fireworksCanvas.style.display = 'none';
 }
-// Uncomment to test: setTimeout(testIntro, 2000);
-*/
