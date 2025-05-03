@@ -1,17 +1,14 @@
 :root {
   --neon: #ff8a00;
-  --dark-bg: #1a1a2e;
-  --accent: #3c1518;
-  --glass-bg: rgba(28,24,40,0.92);
+  --dark-bg: #0a1026;
+  --accent: #1a1a2e;
   --orbitron: 'Orbitron', 'Roboto', sans-serif;
-  --doraemon-blue: #1e90ff;
-  --doraemon-light: #75c2f6;
 }
 
 body {
   margin: 0;
   padding: 0;
-  background: radial-gradient(ellipse at 50% 30%, var(--dark-bg) 60%, var(--accent) 100%);
+  background: var(--dark-bg);
   min-height: 100vh;
   font-family: var(--orbitron);
   overflow: hidden;
@@ -22,66 +19,34 @@ body {
   flex-direction: column;
 }
 
-/* Doraemon-inspired background */
-.doraemon-bg {
+.night-sky-bg {
   position: fixed;
   top: 0; left: 0; width: 100vw; height: 100vh;
   z-index: 0;
   pointer-events: none;
-  background: radial-gradient(circle at center, var(--doraemon-light) 0%, var(--doraemon-blue) 100%);
-  opacity: 0.15;
+  background: linear-gradient(to top, #0a1026 80%, #23284e 100%);
 }
 
-.time-door {
+#starCanvas {
   position: absolute;
-  width: 200px;
-  height: 300px;
-  border: 8px solid #fff;
-  border-radius: 50% 50% 0 0;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -60%);
-  box-shadow: 0 0 30px #ffffff55;
-  animation: doorGlow 4s infinite alternate;
-}
-
-.pocket-circle {
-  position: absolute;
-  width: 300px;
-  height: 300px;
-  border: 10px solid #fff;
-  border-radius: 50%;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  box-shadow: 0 0 40px #ffffff33;
-  animation: circleRotate 20s linear infinite;
-}
-
-@keyframes doorGlow {
-  0% { box-shadow: 0 0 30px #ffffff55; }
-  100% { box-shadow: 0 0 60px #ffffff88; }
-}
-
-@keyframes circleRotate {
-  0% { transform: translate(-50%, -50%) rotate(0deg); }
-  100% { transform: translate(-50%, -50%) rotate(360deg); }
-}
-
-.stars-bg {
-  position: fixed;
-  top: 0; left: 0; width: 100vw; height: 100vh;
-  z-index: 0;
+  left: 0; top: 0;
+  width: 100vw; height: 100vh;
+  display: block;
+  z-index: 1;
   pointer-events: none;
-  background: repeating-radial-gradient(circle at 70% 10%, #fff 0 1px, transparent 1px 100px),
-              repeating-radial-gradient(circle at 30% 60%, #fff8 0 1.5px, transparent 1.5px 120px),
-              repeating-radial-gradient(circle at 80% 80%, #ffd70044 0 1.2px, transparent 1.2px 90px);
-  animation: starMove 60s linear infinite;
 }
 
-@keyframes starMove {
-  0% { background-position: 0 0, 0 0, 0 0; }
-  100% { background-position: 200px 400px, 400px 200px, 100px 300px; }
+.mars-horizon {
+  position: absolute;
+  left: 50%; bottom: 0;
+  width: 280px;
+  height: 80px;
+  background: radial-gradient(ellipse at center, #ff8a00 60%, #c1440e 100%);
+  border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+  transform: translateX(-50%);
+  box-shadow: 0 -10px 60px 10px #ff8a0033, 0 -2px 40px 10px #c1440e77;
+  z-index: 2;
+  opacity: 0.8;
 }
 
 .teaser {
@@ -116,7 +81,6 @@ body {
   text-shadow: 0 2px 16px #0009;
 }
 
-/* Fixed doors container */
 .doors-container {
   position: relative;
   display: flex;
@@ -349,25 +313,6 @@ body {
   font-weight: bold;
 }
 @keyframes blink { 0%,100%{opacity:1;} 50%{opacity:0;} }
-
-/* Falling stars */
-@keyframes star-fall {
-  0% { opacity: 0.8; transform: translateY(-40px) scaleX(0.7) rotate(-10deg);}
-  10% { opacity: 1; }
-  80% { opacity: 1; }
-  100% { opacity: 0; transform: translateY(100vh) scaleX(1) rotate(10deg);}
-}
-
-/* Fireworks canvas */
-#fireworks {
-  position: fixed;
-  left: 0; top: 0;
-  width: 100vw;
-  height: 100vh;
-  pointer-events: none;
-  z-index: 1;
-  display: none; /* Hidden by default */
-}
 
 /* Mobile */
 @media (max-width: 500px) {
