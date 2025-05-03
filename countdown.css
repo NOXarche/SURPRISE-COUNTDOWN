@@ -1,9 +1,17 @@
+:root {
+  --neon: #ff8a00;
+  --dark-bg: #1a1a2e;
+  --accent: #3c1518;
+  --glass-bg: rgba(28,24,40,0.92);
+  --orbitron: 'Orbitron', 'Roboto', sans-serif;
+}
+
 body {
   margin: 0;
   padding: 0;
-  background: radial-gradient(ellipse at 50% 30%, #1a1a2e 60%, #3c1518 100%);
+  background: radial-gradient(ellipse at 50% 30%, var(--dark-bg) 60%, var(--accent) 100%);
   min-height: 100vh;
-  font-family: 'Orbitron', 'Roboto', sans-serif;
+  font-family: var(--orbitron);
   overflow: hidden;
   color: #fff;
   display: flex;
@@ -31,7 +39,7 @@ body {
 .teaser {
   font-size: 2.1rem;
   letter-spacing: 0.05em;
-  color: #ff8a00;
+  color: var(--neon);
   text-align: center;
   margin-bottom: 1.5em;
   text-shadow: 0 2px 16px #ff8a00bb;
@@ -50,7 +58,7 @@ body {
 }
 
 .countdown {
-  font-family: 'Orbitron', 'Roboto', sans-serif;
+  font-family: var(--orbitron);
   font-size: 2.7rem;
   color: #fff;
   letter-spacing: 0.07em;
@@ -75,8 +83,8 @@ body {
 .door {
   width: 50%;
   height: 100%;
-  background: linear-gradient(120deg, #301c0b 60%, #ff8a00 100%);
-  border: 3px solid #ff8a00;
+  background: linear-gradient(120deg, #301c0b 60%, var(--neon) 100%);
+  border: 3px solid var(--neon);
   border-radius: 2em 0 0 2em;
   position: absolute;
   top: 0;
@@ -92,8 +100,8 @@ body {
   left: 50%;
   border-radius: 0 2em 2em 0;
   border-left: none;
-  border-right: 3px solid #ff8a00;
-  background: linear-gradient(-120deg, #301c0b 60%, #ff8a00 100%);
+  border-right: 3px solid var(--neon);
+  background: linear-gradient(-120deg, #301c0b 60%, var(--neon) 100%);
   transform-origin: right center;
 }
 
@@ -127,9 +135,9 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  color: #ff8a00;
+  color: var(--neon);
   font-size: 2.1rem;
-  font-family: 'Orbitron', 'Roboto', sans-serif;
+  font-family: var(--orbitron);
   text-shadow: 0 2px 16px #000c;
   z-index: 5;
   pointer-events: none;
@@ -140,9 +148,9 @@ body {
   margin: 2em auto 0 auto;
   padding: 1em 2.5em;
   font-size: 1.5rem;
-  font-family: 'Orbitron', 'Roboto', sans-serif;
+  font-family: var(--orbitron);
   color: #fff;
-  background: linear-gradient(90deg, #ff8a00 60%, #c1440e 100%);
+  background: linear-gradient(90deg, var(--neon) 60%, #c1440e 100%);
   border: none;
   border-radius: 2em;
   box-shadow: 0 4px 32px #ff8a0044;
@@ -167,6 +175,129 @@ body {
   display: block;
 }
 
+/* Martian Intro Modal Styles */
+.martian-intro-bg {
+  position: fixed; top:0; left:0; width:100vw; height:100vh;
+  background: radial-gradient(ellipse at 50% 30%, var(--dark-bg) 60%, var(--accent) 100%);
+  z-index: 9999; display: flex; align-items: center; justify-content: center;
+  animation: fadeIn 1s;
+}
+@keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+
+.martian-intro-card {
+  background: rgba(28,24,40,0.97);
+  border-radius: 2em;
+  box-shadow: 0 8px 40px #ff8a0033, 0 2px 12px #1a1a2e55;
+  padding: 3em 2em 2em 2em;
+  text-align: center;
+  max-width: 400px;
+  animation: popIn 1.5s cubic-bezier(.4,2,.6,1);
+}
+@keyframes popIn { 0% {transform:scale(0.8); opacity:0;} 100%{transform:scale(1); opacity:1;} }
+
+.martian-intro-type {
+  font-family: var(--orbitron);
+  font-size: 1.5rem; color: var(--neon); margin-bottom: 1.5em;
+  min-height: 5em;
+  letter-spacing: 0.03em;
+}
+
+.martian-intro-credit {
+  font-size: 1.1em; color: #fff9; margin-bottom: 2em;
+  animation: fadeIn 2s 2s both;
+}
+
+.martian-animation {
+  position: relative;
+  height: 120px;
+  margin: 2em auto;
+  width: 100%;
+  overflow: hidden;
+}
+
+.mars-planet {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  background: radial-gradient(circle at 30% 30%, #ff8a00 30%, #c1440e 100%);
+  border-radius: 50%;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  box-shadow: 0 0 30px #ff8a0088;
+}
+
+.rover {
+  position: absolute;
+  width: 40px;
+  height: 20px;
+  background: #ddd;
+  bottom: 20px;
+  left: 20px;
+  border-radius: 4px;
+  animation: roverMove 8s linear infinite;
+}
+.rover:before {
+  content: '';
+  position: absolute;
+  width: 16px;
+  height: 8px;
+  background: #999;
+  top: -8px;
+  left: 12px;
+  border-radius: 4px 4px 0 0;
+}
+.rover:after {
+  content: '';
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background: #ff8a00;
+  top: -4px;
+  left: 16px;
+  border-radius: 50%;
+  box-shadow: 0 0 8px #ff8a00;
+}
+
+@keyframes roverMove {
+  0% { left: -40px; }
+  100% { left: calc(100% + 40px); }
+}
+
+.martian-intro-btn {
+  font-family: var(--orbitron);
+  font-size: 1.2rem;
+  padding: 0.8em 2em;
+  background: linear-gradient(90deg, var(--neon) 60%, #c1440e 100%);
+  color: #fff; border: none; border-radius: 2em;
+  box-shadow: 0 4px 32px #ff8a0044;
+  cursor: pointer; letter-spacing: 0.08em;
+  transition: background 0.2s, transform 0.2s;
+  animation: btnPop 1.5s cubic-bezier(.4,2,.6,1) 2.5s both;
+  display: inline-block;
+}
+.martian-intro-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 40px #ff8a0088;
+}
+
+.type-cursor {
+  display: inline-block;
+  width: 1ch;
+  animation: blink 1s infinite;
+  color: #fff;
+  font-weight: bold;
+}
+@keyframes blink { 0%,100%{opacity:1;} 50%{opacity:0;} }
+
+/* Falling stars */
+@keyframes star-fall {
+  0% { opacity: 0.8; transform: translateY(-40px) scaleX(0.7) rotate(-10deg);}
+  10% { opacity: 1; }
+  80% { opacity: 1; }
+  100% { opacity: 0; transform: translateY(100vh) scaleX(1) rotate(10deg);}
+}
+
 /* Mobile */
 @media (max-width: 500px) {
   .doors-frame { width: 95vw; height: 180px;}
@@ -174,4 +305,6 @@ body {
   .start-btn { font-size: 1.1rem; padding: 0.8em 1.3em;}
   .teaser { font-size: 1.7rem; }
   .countdown { font-size: 1.8rem; }
+  .martian-intro-card { max-width: 90vw; padding: 2em 1em; }
+  .martian-intro-type { font-size: 1.2rem; }
 }
