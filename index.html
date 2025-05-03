@@ -9,21 +9,27 @@
 </head>
 <body>
   <div class="stars-bg"></div>
+  <div class="doraemon-bg">
+    <div class="time-door"></div>
+    <div class="pocket-circle"></div>
+  </div>
   <div class="teaser">
     <span>🚀 <b>Section A Portal</b> Unveiling Soon!</span><br>
     <span class="teaser-subtitle">Get ready to start your Martian journey.<br/>Stay tuned for a cosmic surprise!</span>
   </div>
   <div class="countdown" id="countdown"></div>
-  <div class="doors-frame" id="doorsFrame">
-    <div class="door left">
-      <div class="door-handle"></div>
-      <div class="door-text">5<sup>th</sup> MAY<br>9:00 AM</div>
+  <div class="doors-container">
+    <div class="doors-frame" id="doorsFrame">
+      <div class="door left">
+        <div class="door-handle"></div>
+        <div class="door-text">5<sup>th</sup> MAY<br>9:00 AM</div>
+      </div>
+      <div class="door right">
+        <div class="door-handle"></div>
+      </div>
     </div>
-    <div class="door right">
-      <div class="door-handle"></div>
-    </div>
+    <button class="start-btn" id="startBtn">START YOUR JOURNEY NOW</button>
   </div>
-  <button class="start-btn" id="startBtn">START YOUR JOURNEY NOW</button>
   
   <!-- Martian Intro Modal (shown after doors open) -->
   <div id="martianIntro" class="martian-intro-bg" style="display:none;">
