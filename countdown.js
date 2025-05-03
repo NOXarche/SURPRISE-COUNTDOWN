@@ -1,16 +1,37 @@
 // --- Countdown Logic ---
 // Target: 5th May 2025, 9:00 AM IST (Asia/Kolkata)
 function getTargetDateIST() {
-  return new Date(Date.UTC(2025, 4, 3, 8, 33, 0)); // 9:00 AM IST = 3:30 AM UTC
+  return new Date(Date.UTC(2025, 4, 5, 3, 30, 0)); // 9:00 AM IST = 3:30 AM UTC
 }
 const targetDate = getTargetDateIST();
 
 let fireworksActive = false;
 
+console.log("Target date:", targetDate);
+console.log("Current date:", new Date());
+console.log("Time remaining:", targetDate - new Date());
+
+// Initialize everything when page loads
+function initializePage() {
+  const now = new Date();
+  if (now >= targetDate) {
+    // If target time has passed, show everything immediately
+    document.getElementById('countdown').textContent = "The wait is over!";
+    document.getElementById('doorsFrame').classList.add('open');
+    document.getElementById('startBtn').style.display = 'block';
+    startFireworks();
+  } else {
+    // Otherwise start countdown
+    updateCountdown();
+    setInterval(checkAndOpenDoor, 1000);
+  }
+}
+
 function updateCountdown() {
   const now = new Date();
   let diff = targetDate - now;
   const countdownDiv = document.getElementById('countdown');
+  
   if (diff <= 0) {
     countdownDiv.textContent = "The wait is over!";
     document.getElementById('doorsFrame').classList.add('open');
@@ -18,6 +39,7 @@ function updateCountdown() {
     if (!fireworksActive) startFireworks();
     return;
   }
+  
   const days = Math.floor(diff / (1000 * 60 * 60 * 24));
   const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
   const mins = Math.floor((diff / (1000 * 60)) % 60);
@@ -25,7 +47,6 @@ function updateCountdown() {
   countdownDiv.textContent = `Unveiling in ${days}d ${hours}h ${mins}m ${secs}s`;
   setTimeout(updateCountdown, 1000);
 }
-updateCountdown();
 
 // --- Door Animation + Button Logic ---
 function checkAndOpenDoor() {
@@ -40,11 +61,16 @@ function checkAndOpenDoor() {
     stopFireworks();
   }
 }
-setInterval(checkAndOpenDoor, 1000);
 
 // --- Redirect Button ---
 document.getElementById('startBtn').onclick = function() {
-  showMartianIntro();
+  try {
+    showMartianIntro();
+  } catch (e) {
+    console.error("Error showing intro:", e);
+    // Fallback: redirect directly if modal fails
+    window.location.href = "https://section-a-site-final.vercel.app/";
+  }
 };
 
 // --- Martian Intro Modal ---
@@ -122,8 +148,6 @@ function drawStars() {
   }
   requestAnimationFrame(drawStars);
 }
-resizeStarCanvas();
-drawStars();
 
 // --- Fireworks Animation (optimized) ---
 const fireworksCanvas = document.getElementById('fireworksCanvas');
@@ -134,6 +158,9 @@ let particles = [];
 function resizeFireworksCanvas() {
   fireworksCanvas.width = window.innerWidth;
   fireworksCanvas.height = window.innerHeight;
+  if (new Date() >= targetDate) {
+    fireworksCanvas.style.display = 'block';
+  }
 }
 window.addEventListener('resize', resizeFireworksCanvas);
 resizeFireworksCanvas();
@@ -162,7 +189,7 @@ class Firework {
     return true;
   }
   explode() {
-    const particleCount = 36 + Math.floor(Math.random() * 18); // Lowered for smoothness
+    const particleCount = 36 + Math.floor(Math.random() * 18);
     for (let i = 0; i < particleCount; i++) {
       particles.push(new Particle(this.x, this.y, this.hue));
     }
@@ -265,3 +292,10 @@ function stopFireworks() {
   fireworksActive = false;
   fireworksCanvas.style.display = 'none';
 }
+
+// Initialize everything when page loads
+window.addEventListener('DOMContentLoaded', () => {
+  resizeStarCanvas();
+  drawStars();
+  initializePage();
+});
