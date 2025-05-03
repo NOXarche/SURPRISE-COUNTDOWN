@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Unveiling Soon...</title>
+  <title>Martian Civils - Unveiling Soon</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <link href="https://fonts.googleapis.com/css?family=Orbitron:700|Roboto:400,700&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="countdown.css"/>
@@ -24,6 +24,20 @@
     </div>
   </div>
   <button class="start-btn" id="startBtn">START YOUR JOURNEY NOW</button>
+  
+  <!-- Martian Intro Modal (shown after doors open) -->
+  <div id="martianIntro" class="martian-intro-bg" style="display:none;">
+    <div class="martian-intro-card">
+      <div class="martian-intro-type" id="martianType"></div>
+      <div class="martian-intro-credit">By <span style="color:#ff8a00;">LumiNox</span> for the Martians</div>
+      <div class="martian-animation">
+        <div class="mars-planet"></div>
+        <div class="rover"></div>
+      </div>
+      <button id="martianIntroBtn" class="martian-intro-btn" style="display:none;">Begin Your Journey</button>
+    </div>
+  </div>
+  
   <script src="countdown.js"></script>
 </body>
 </html>
