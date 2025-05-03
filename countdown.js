@@ -41,8 +41,44 @@ setInterval(checkAndOpenDoor, 1000);
 
 // --- Redirect Button ---
 document.getElementById('startBtn').onclick = function() {
-  window.location.href = "https://section-a-site-final.vercel.app/";
+  // Show the Martian intro instead of redirecting immediately
+  showMartianIntro();
 };
+
+// --- Martian Intro Modal ---
+function showMartianIntro() {
+  const intro = document.getElementById('martianIntro');
+  const typeDiv = document.getElementById('martianType');
+  const btn = document.getElementById('martianIntroBtn');
+  intro.style.display = 'flex';
+
+  const lines = [
+    "Hello, are you a Martian?<br>",
+    "Welcome to the Section A Civil Engineering Portal,<br>2024–28, Jadavpur University.<br>",
+    "Your journey to the Red Planet begins now!"
+  ];
+  let line = 0, char = 0;
+  function typeLine() {
+    if (line < lines.length) {
+      if (char < lines[line].length) {
+        typeDiv.innerHTML = lines.slice(0, line).join('') + lines[line].slice(0, char+1) + '<span class="type-cursor">|</span>';
+        char++;
+        setTimeout(typeLine, 35);
+      } else {
+        char = 0; line++;
+        setTimeout(typeLine, 600);
+      }
+    } else {
+      typeDiv.innerHTML = lines.join('');
+      btn.style.display = 'inline-block';
+    }
+  }
+  typeLine();
+  btn.onclick = () => {
+    // Redirect to the main site when the button is clicked
+    window.location.href = "https://section-a-site-final.vercel.app/";
+  };
+}
 
 // --- Falling Stars Animation ---
 function createFallingStar() {
@@ -66,13 +102,15 @@ function createFallingStar() {
 // Add falling stars animation
 setInterval(createFallingStar, 300);
 
-// Add this style to the document
-const style = document.createElement('style');
-style.textContent = `
-@keyframes star-fall {
-  0% { opacity: 0.8; transform: translateY(-40px) scaleX(0.7) rotate(-10deg);}
-  10% { opacity: 1; }
-  80% { opacity: 1; }
-  100% { opacity: 0; transform: translateY(100vh) scaleX(1) rotate(10deg);}
-}`;
-document.head.appendChild(style);
+// --- For testing purposes ---
+ Uncomment this to test the intro without waiting for the target date
+
+function testIntro() {
+  // Simulate doors opening
+  document.getElementById('doorsFrame').classList.add('open');
+  document.getElementById('startBtn').style.display = 'block';
+  
+   To test the intro directly
+   showMartianIntro();
+}
+ Uncomment to test: setTimeout(testIntro, 2000);
