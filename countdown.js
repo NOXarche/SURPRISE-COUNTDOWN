@@ -1,7 +1,7 @@
 // --- Countdown Logic ---
 // Target: 5th May 2025, 9:00 AM IST (Asia/Kolkata)
 function getTargetDateIST() {
-  return new Date(Date.UTC(2025, 4, 5, 3, 30, 0)); // 9:00 AM IST = 3:30 AM UTC
+  return new Date(Date.UTC(2025, 4, 3, 8, 32, 0)); // 9:00 AM IST = 3:30 AM UTC
 }
 const targetDate = getTargetDateIST();
 
