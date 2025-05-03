@@ -358,6 +358,17 @@ body {
   100% { opacity: 0; transform: translateY(100vh) scaleX(1) rotate(10deg);}
 }
 
+/* Fireworks canvas */
+#fireworks {
+  position: fixed;
+  left: 0; top: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 1;
+  display: none; /* Hidden by default */
+}
+
 /* Mobile */
 @media (max-width: 500px) {
   .doors-frame { width: 95vw; height: 180px;}
