@@ -103,14 +103,15 @@ function createFallingStar() {
 setInterval(createFallingStar, 300);
 
 // --- For testing purposes ---
- Uncomment this to test the intro without waiting for the target date
-
+// Uncomment this to test the intro without waiting for the target date
+/*
 function testIntro() {
   // Simulate doors opening
   document.getElementById('doorsFrame').classList.add('open');
   document.getElementById('startBtn').style.display = 'block';
   
-   To test the intro directly
-   showMartianIntro();
+  // To test the intro directly
+  // showMartianIntro();
 }
- Uncomment to test: setTimeout(testIntro, 2000);
+// Uncomment to test: setTimeout(testIntro, 2000);
+*/
