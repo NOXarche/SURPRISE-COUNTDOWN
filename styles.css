@@ -1,0 +1,177 @@
+body {
+  margin: 0;
+  padding: 0;
+  background: radial-gradient(ellipse at 50% 30%, #1a1a2e 60%, #3c1518 100%);
+  min-height: 100vh;
+  font-family: 'Orbitron', 'Roboto', sans-serif;
+  overflow: hidden;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.stars-bg {
+  position: fixed;
+  top: 0; left: 0; width: 100vw; height: 100vh;
+  z-index: 0;
+  pointer-events: none;
+  background: repeating-radial-gradient(circle at 70% 10%, #fff 0 1px, transparent 1px 100px),
+              repeating-radial-gradient(circle at 30% 60%, #fff8 0 1.5px, transparent 1.5px 120px),
+              repeating-radial-gradient(circle at 80% 80%, #ffd70044 0 1.2px, transparent 1.2px 90px);
+  animation: starMove 60s linear infinite;
+}
+
+@keyframes starMove {
+  0% { background-position: 0 0, 0 0, 0 0; }
+  100% { background-position: 200px 400px, 400px 200px, 100px 300px; }
+}
+
+.teaser {
+  font-size: 2.1rem;
+  letter-spacing: 0.05em;
+  color: #ff8a00;
+  text-align: center;
+  margin-bottom: 1.5em;
+  text-shadow: 0 2px 16px #ff8a00bb;
+  z-index: 2;
+  animation: teaserFade 2.5s ease-in;
+}
+
+.teaser-subtitle {
+  font-size: 1.1rem;
+  color: #fff;
+}
+
+@keyframes teaserFade {
+  0% { opacity: 0; transform: translateY(-40px);}
+  100% { opacity: 1; transform: none;}
+}
+
+.countdown {
+  font-family: 'Orbitron', 'Roboto', sans-serif;
+  font-size: 2.7rem;
+  color: #fff;
+  letter-spacing: 0.07em;
+  margin-bottom: 2.5em;
+  text-align: center;
+  z-index: 2;
+  text-shadow: 0 2px 16px #0009;
+}
+
+.doors-frame {
+  width: 340px;
+  height: 340px;
+  margin: 0 auto 2em auto;
+  position: relative;
+  perspective: 1400px;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.door {
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(120deg, #301c0b 60%, #ff8a00 100%);
+  border: 3px solid #ff8a00;
+  border-radius: 2em 0 0 2em;
+  position: absolute;
+  top: 0;
+  left: 0;
+  box-shadow: 0 8px 32px #000a;
+  transition: transform 2s cubic-bezier(.4,2,.6,1);
+  transform-origin: left center;
+  z-index: 3;
+  will-change: transform;
+}
+
+.door.right {
+  left: 50%;
+  border-radius: 0 2em 2em 0;
+  border-left: none;
+  border-right: 3px solid #ff8a00;
+  background: linear-gradient(-120deg, #301c0b 60%, #ff8a00 100%);
+  transform-origin: right center;
+}
+
+.doors-frame.open .door.left {
+  transform: rotateY(-100deg);
+}
+
+.doors-frame.open .door.right {
+  transform: rotateY(100deg);
+}
+
+.door-handle {
+  position: absolute;
+  top: 50%;
+  left: 90%;
+  transform: translate(-50%, -50%);
+  width: 24px;
+  height: 24px;
+  background: #fff;
+  border-radius: 50%;
+  box-shadow: 0 0 8px #ff8a00bb;
+  z-index: 4;
+}
+
+.door.right .door-handle {
+  left: 10%;
+}
+
+.door-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #ff8a00;
+  font-size: 2.1rem;
+  font-family: 'Orbitron', 'Roboto', sans-serif;
+  text-shadow: 0 2px 16px #000c;
+  z-index: 5;
+  pointer-events: none;
+}
+
+.start-btn {
+  display: none;
+  margin: 2em auto 0 auto;
+  padding: 1em 2.5em;
+  font-size: 1.5rem;
+  font-family: 'Orbitron', 'Roboto', sans-serif;
+  color: #fff;
+  background: linear-gradient(90deg, #ff8a00 60%, #c1440e 100%);
+  border: none;
+  border-radius: 2em;
+  box-shadow: 0 4px 32px #ff8a0044;
+  cursor: pointer;
+  letter-spacing: 0.08em;
+  transition: background 0.2s, transform 0.2s;
+  z-index: 10;
+  animation: btnPop 1.5s cubic-bezier(.4,2,.6,1);
+}
+
+.start-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 40px #ff8a0088;
+}
+
+@keyframes btnPop {
+  0% { opacity: 0; transform: scale(0.7);}
+  100% { opacity: 1; transform: scale(1);}
+}
+
+.doors-frame.open + .start-btn {
+  display: block;
+}
+
+/* Mobile */
+@media (max-width: 500px) {
+  .doors-frame { width: 95vw; height: 180px;}
+  .door-text { font-size: 1.1rem;}
+  .start-btn { font-size: 1.1rem; padding: 0.8em 1.3em;}
+  .teaser { font-size: 1.7rem; }
+  .countdown { font-size: 1.8rem; }
+}
