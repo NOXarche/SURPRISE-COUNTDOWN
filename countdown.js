@@ -69,7 +69,7 @@ document.getElementById('startBtn').onclick = function() {
   } catch (e) {
     console.error("Error showing intro:", e);
     // Fallback: redirect directly if modal fails
-    window.location.href = "https://section-a-site-final.vercel.app/";
+    window.location.href = "https://section-a-juce.vercel.app/";
   }
 };
 
@@ -103,7 +103,7 @@ function showMartianIntro() {
   }
   typeLine();
   btn.onclick = () => {
-    window.location.href = "https://section-a-site-final.vercel.app/";
+    window.location.href = "https://section-a-juce.vercel.app/";
   };
 }
 
